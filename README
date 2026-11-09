@@ -18,7 +18,7 @@ This project passively captures 802.11 management and data frames in promiscuous
 
 
 
-- **Decoupled Core Pipelining:** 
+- **Decoupled Core Pipelining:**
 
   - **Core 0:** Hardware Wi-Fi RX interrupt handler (ISR) and non-blocking packet ingestion into a dedicated FreeRTOS ring buffer.
 
@@ -87,9 +87,13 @@ This project passively captures 802.11 management and data frames in promiscuous
 1. Clone this repository:
 
 
+
 ```bash
+
 git clone https://github.com/kris22871/esp32-l2-frame-analyzer.git
+
 cd esp32-l2-frame-analyzer
+
 ```
 
 
@@ -97,8 +101,11 @@ cd esp32-l2-frame-analyzer
 2. Build the firmware:
 
 
+
 ```bash
+
 pio run
+
 ```
 
 
@@ -106,8 +113,11 @@ pio run
 3. Flash the firmware and open the serial monitor:
 
 
+
 ```bash
+
 pio run -t upload -t monitor
+
 ```
 
 
