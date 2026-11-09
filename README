@@ -1,0 +1,127 @@
+# ESP32 L2 Wi-Fi Sniffer & Frame Analyzer
+
+
+
+A lightweight, zero-copy IEEE 802.11 packet sniffer and wireless intrusion detection monitor built for the ESP32 microcontroller using ESP-IDF and FreeRTOS.
+
+
+
+## Overview
+
+
+
+This project passively captures 802.11 management and data frames in promiscuous mode and performs real-time L2 header analysis. It isolates raw frame capture from frame parsing across CPU cores to prevent buffer overflows and ensure zero packet loss during peak traffic bursts.
+
+
+
+## Key Architectural Highlights
+
+
+
+- **Decoupled Core Pipelining:** 
+
+  - **Core 0:** Hardware Wi-Fi RX interrupt handler (ISR) and non-blocking packet ingestion into a dedicated FreeRTOS ring buffer.
+
+  - **Core 1:** Asynchronous payload parsing, state tracking, and deauthentication frame anomaly detection.
+
+- **Zero-Allocation Runtime:** Fixed-size ring buffer (`xRingbuffer`) allocated at initialization with zero dynamic memory allocations (`malloc`/`free`) during runtime packet reception.
+
+- **Framework:** Native ESP-IDF v5.x via PlatformIO.
+
+
+
+## Project Structure
+
+
+
+```text
+
+├── src/
+
+│   ├── main.c                     # System initialization and core-pinned task setup
+
+│   ├── net/
+
+│   │   ├── wifi_sniffer.h         # Promiscuous driver API
+
+│   │   ├── wifi_sniffer.c         # ISR handler & ring buffer producer
+
+│   │   └── ieee80211_types.h      # Packed 802.11 frame definitions
+
+│   └── processing/
+
+│       ├── frame_analyzer.h       # Analysis task entry point
+
+│       └── frame_analyzer.c       # Frame consumer & L2 parser
+
+├── platformio.ini                 # Build targets and compiler flags
+
+├── LICENSE                        # MIT License
+
+└── README.md
+
+```
+
+
+
+## Getting Started
+
+
+
+### Prerequisites
+
+
+
+- [Visual Studio Code](https://code.visualstudio.com/)
+
+- [PlatformIO IDE](https://platformio.org/) extension
+
+- ESP32 Development Board (e.g., ESP32-WROOM-32)
+
+
+
+### Build & Flash
+
+
+
+1. Clone this repository:
+
+
+```bash
+git clone https://github.com/kris22871/esp32-l2-frame-analyzer.git
+cd esp32-l2-frame-analyzer
+```
+
+
+
+2. Build the firmware:
+
+
+```bash
+pio run
+```
+
+
+
+3. Flash the firmware and open the serial monitor:
+
+
+```bash
+pio run -t upload -t monitor
+```
+
+
+
+## Disclaimer
+
+
+
+This software is designed and provided strictly for educational purposes, protocol analysis, and authorized network security auditing. The author assumes no liability for misuse, unauthorized monitoring, or regulatory violations.
+
+
+
+## License
+
+
+
+Distributed under the MIT License. See `LICENSE` for more details.
