@@ -30,7 +30,7 @@ void app_main(void) {
         1
     );
 
-    // Wi-Fi радиоинтерфейс стартует на Core 0
+    // Wi-Fi radio interface launches on Core 0
     wifi_sniffer_init(rx_ringbuf);
     wifi_sniffer_set_channel(1);
 }
